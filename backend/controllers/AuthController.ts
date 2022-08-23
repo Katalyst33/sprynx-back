@@ -1,6 +1,7 @@
 import { Controller, Http } from "xpresser/types/http";
 import UserModel, { UserModelDataType } from "../models/UserModel";
 import { compare, hash } from "@techie04/xpresser-bcrypt";
+import { createToken } from "../export";
 
 /**
  * AuthController
@@ -60,8 +61,12 @@ export = <Controller.Object>{
 
       if (!compare(body.password, savedPassword)) throw "password incorrect";
 
+      // generate token
+
+      const token = createToken(existingUser.id().toString());
+
       await existingUser.update({ lastSeenAt: new Date() });
-      return http.send({ message: "Login succesfull", body });
+      return http.send({ message: "Login succesful ", token });
     } catch (e) {
       return http.status(400).send({ error: e });
     }

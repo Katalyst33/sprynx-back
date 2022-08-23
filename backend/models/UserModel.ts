@@ -1,4 +1,4 @@
-import { is, XMongoSchema, XMongoModel } from "xpress-mongo";
+import { is, XMongoSchema, XMongoModel, joi } from "xpress-mongo";
 import { UseCollection } from "@xpresser/xpress-mongo";
 
 /**
@@ -31,7 +31,7 @@ class UserModel extends XMongoModel {
     role: is.Array(() => ["user"]).optional(),
     lastname: is.String().optional(),
     firstname: is.String().optional(),
-    email: is.String().required(),
+    email: joi.string().email().required(),
     mobile: is.String().optional(),
     password: is.String().required(),
   };

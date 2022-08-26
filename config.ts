@@ -17,7 +17,7 @@ export = {
   server: {
     domain: "localhost",
     // Server Port
-    port: 5300,
+    port: 5330,
     use: { cors: true, bodyParser: true, ngrok: true, helmet: false },
   },
 

@@ -12,18 +12,19 @@ const Route = getInstanceRouter();
 //guest routes
 
 Route.path("/api", () => {
+  // Route.get("/", "App@index").name("index");
+  Route.get("/ping", "App@ping");
+})
+  .controller("App")
+  .middlewares(["Auth.validateAuth"]);
+
+Route.path("/api", () => {
   Route.post("/services", "Service@allServices");
   Route.post("/register", "Auth@register");
   Route.post("/login", "Auth@login");
   // Route.post("/make-booking", "Account@bookings");
 });
 
-Route.path("/api", () => {
-  Route.get("/", "App@index").name("index");
-  Route.get("/ping", "App@ping");
-})
-  .controller("App")
-  .middlewares(["Auth.validateAuth"]);
 //guest routes
 /* 
 //account routes

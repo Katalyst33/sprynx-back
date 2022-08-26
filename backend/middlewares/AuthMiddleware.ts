@@ -17,14 +17,14 @@ export = {
 
     // check if token is valid
     if (!authToken) {
-      return http.status(200).send({ error: "unauthorized" });
+      // return http.status(200).send({ message: "you are not logged in" });
+
+      return http.next();
     }
 
     try {
       // verify JWT token
       const verified = verify(authToken, "appSecret") as any;
-
-      console.log(verified, "verified");
 
       // save to state
       http.state.set("authUser", UserModel.id(verified.id));

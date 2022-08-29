@@ -37,9 +37,6 @@ export = {
         http.state.set("currentUser", user);
       }
 
-      console.log(http.state.get("currentUser"));
-      // console.log("verified Id", verified.id, user);
-
       // run check here
 
       // console.log("verified", verified?.id);

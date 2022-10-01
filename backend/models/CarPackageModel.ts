@@ -15,7 +15,6 @@ export interface CarPackageModelDataType {
   duration: string;
   largeCar: number;
   logistics: string;
-  link: string;
   serviceIds: [];
 }
 
@@ -45,6 +44,6 @@ class CarPackageModel extends XMongoModel {
  * Map Model to Collection: `car_package_models`
  * .native() will be made available for use.
  */
-UseCollection(CarPackageModel, "car_package");
+UseCollection(CarPackageModel, "car_package_model");
 
 export default CarPackageModel;

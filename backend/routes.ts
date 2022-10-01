@@ -19,7 +19,11 @@ Route.path("/api", () => {
   .middlewares(["Auth.validateAuth"]);
 
 Route.path("/api", () => {
-  Route.post("/services", "Service@allServices");
+  Route.post("/packages/add-package", "CarPackage@addPackage");
+  Route.post("/packages/all-packages", "CarPackage@allPackages");
+  Route.post("/all-services", "Service@allServices");
+  Route.post("/add-service", "Service@addService");
+  Route.get("/one-service/:uuid", "Service@getService");
   Route.post("/register", "Auth@register");
   Route.post("/login", "Auth@login");
   // Route.post("/make-booking", "Account@bookings");

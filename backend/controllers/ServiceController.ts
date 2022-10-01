@@ -19,29 +19,6 @@ export = <Controller.Object>{
     const { limit } = http.req.body;
     console.log(limit);
 
-    const services = [
-      {
-        id: 235,
-        title: "Exterior",
-        description: "Exterior cleaning",
-      },
-      {
-        id: 236,
-        title: "Interior",
-        description: "Interior cleaning",
-      },
-      {
-        id: 237,
-        title: "Engine",
-        description: "Engine cleaning",
-      },
-      {
-        id: 661,
-        title: "Full cleaning",
-        description: "we will clean up and dwon for you",
-      },
-    ];
-
     // get all services
 
     const allServices = await ServiceModel.native()
@@ -52,7 +29,7 @@ export = <Controller.Object>{
     return http.json({ message: "fetched all services", allServices }, 200);
   },
 
-  async createService(http: Http) {
+  async addService(http: Http) {
     const body = http.req.body;
 
     try {
@@ -78,5 +55,13 @@ export = <Controller.Object>{
     } catch (e: any) {
       return http.status(500).json({ error: e.message });
     }
+  },
+
+  async getService(http: Http) {
+    const { uuid } = http.req.body;
+
+    const service = await ServiceModel.native().findOne({ uuid });
+
+    return http.json({ message: "fetched service", service }, 200);
   },
 };

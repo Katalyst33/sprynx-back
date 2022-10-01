@@ -9,6 +9,8 @@ export interface ServiceModelDataType {
   updatedAt?: Date;
   createdAt: Date;
   title: string;
+  uuid: string;
+
   description: string;
 }
 
@@ -20,6 +22,7 @@ class ServiceModel extends XMongoModel {
   // Set Model Schema
   static schema: XMongoSchema = {
     updatedAt: is.Date(),
+    uuid: is.Uuid().required(),
     createdAt: is.Date().required(),
     title: is.String().required(),
     description: is.String().required(),

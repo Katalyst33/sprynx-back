@@ -17,26 +17,47 @@ export = <Controller.Object>{
    */
 
   async addPackage(http: Http) {
-    const newPackage = http.req.body;
+    const body = http.req.body;
+
+    console.log(body);
 
     try {
-      const serviceID = [];
+      const newPackage = CarPackageModel.make(body);
 
-      // save to database
-      for (const serviceId of newPackage.serviceIds) {
-        serviceID.push(CarPackageModel.id(serviceId));
-      }
+      await newPackage.save();
 
-      const main = CarPackageModel.make({
-        newPackage,
-        serviceIds: serviceID,
-      });
-
-      
-
-      return http.json({ message: "package created", main }, 201);
+      return http.json({ message: "package created", newPackage }, 201);
     } catch (e: any) {
       return http.status(500).json({ error: e.message });
     }
+  },
+
+  async allPackages(http: Http) {
+    const { limit } = http.req.body;
+
+    const allPackages = await CarPackageModel.native()
+      .aggregate([
+        {
+          $limit: limit,
+        },
+        //look up array of serviceId
+        {
+          $lookup: {
+            from: "service_models",
+            localField: "serviceIds",
+            foreignField: "uuid",
+            as: "services",
+          },
+        },
+        {
+          $project: {
+            serviceIds: 0,
+          },
+        },
+        //unwind the array of services
+      ])
+      .toArray();
+
+    return http.json({ message: "fetched all packages", allPackages }, 200);
   },
 };

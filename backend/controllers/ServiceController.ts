@@ -23,7 +23,7 @@ export = <Controller.Object>{
 
     const allServices = await ServiceModel.native()
       .find({})
-      .limit(limit)
+      .limit(limit || 10)
       .toArray();
 
     return http.json({ message: "fetched all services", allServices }, 200);
@@ -58,10 +58,54 @@ export = <Controller.Object>{
   },
 
   async getService(http: Http) {
-    const { uuid } = http.req.body;
+    const { uuid } = http.req.params;
 
     const service = await ServiceModel.native().findOne({ uuid });
 
+    if (!service) {
+      return http.json({ message: "service not found" }, 404);
+    }
+
     return http.json({ message: "fetched service", service }, 200);
+  },
+
+  async updateService(http: Http) {
+    const { uuid } = http.req.params;
+    const { body } = http.req;
+
+    const service = await ServiceModel.native().findOne({ uuid });
+
+    if (!service) {
+      return http.json({ message: "service not found" }, 404);
+    }
+
+    // update service
+
+    const updatedService = await ServiceModel.native().findOneAndUpdate(
+      { uuid },
+      { $set: body }
+    );
+
+    return http.json({ message: "updated service" }, 200);
+  },
+  async deleteService(http: Http) {
+    const { uuid } = http.req.params;
+    const { body } = http.req;
+
+    const service = await ServiceModel.native().findOne({ uuid });
+
+    if (!service) {
+      return http.json({ message: "service not found" }, 404);
+    }
+
+    // delete service
+
+    const deletedService = await ServiceModel.native().findOneAndDelete({
+      uuid,
+    });
+
+    // update service
+
+    return http.json({ message: "Deleted service" }, 200);
   },
 };

@@ -19,11 +19,21 @@ Route.path("/api", () => {
   .middlewares(["Auth.validateAuth"]);
 
 Route.path("/api", () => {
-  Route.post("/packages/add-package", "CarPackage@addPackage");
-  Route.post("/packages/all-packages", "CarPackage@allPackages");
-  Route.post("/all-services", "Service@allServices");
-  Route.post("/add-service", "Service@addService");
-  Route.get("/one-service/:uuid", "Service@getService");
+  Route.path("/services/", () => {
+    Route.post("all-services", "Service@allServices");
+    Route.post("add-service", "Service@addService");
+    Route.delete("delete-service/:uuid", "Service@deleteService");
+    Route.get("one-service/:uuid", "Service@getService");
+    Route.post("update-service/:uuid", "Service@updateService");
+  });
+  Route.path("/packages/", () => {
+    Route.post("all-packages", "CarPackage@allPackages");
+    Route.post("add-package", "CarPackage@addPackage");
+    Route.get("get-package/:uuid", "CarPackage@getPackage");
+    Route.post("update-package/:uuid", "CarPackage@updatePackage");
+    Route.delete("delete-package/:uuid", "CarPackage@deletePackage");
+  });
+
   Route.post("/register", "Auth@register");
   Route.post("/login", "Auth@login");
   // Route.post("/make-booking", "Account@bookings");

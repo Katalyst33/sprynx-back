@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "Mobile Car Booking Software",
   "main": "app.ts",
-  "repository": "",
+  "repository": "https://github.com/Katalyst33/sprynx-back.git",
   "author": "sprynx",
   "license": "MIT",
   "private": false,

@@ -24,5 +24,6 @@ jobs:
 
     - name: Build
       run: |
+       echo ----Running Actions,
         yarn install
         yarn run build

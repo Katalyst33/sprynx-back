@@ -3,50 +3,35 @@
  * See https://xpresserjs.com/configuration/
  */
 import path = require("path");
+import env from "./env";
+
 const base = path.resolve(`${__dirname}`);
 export = {
-  // name of app
-  name: "Xpresser-Simple-Typescript-App",
+    // name of app
+    name: "sprynx-server",
 
-  // app environment
-  env: "development",
-
-  /**
-   * By default xpresser sets this for you.
-   */
-  server: {
-    domain: "localhost",
-    // Server Port
-    port: 5330,
-    use: { cors: true, bodyParser: true, ngrok: true, helmet: false },
-  },
-
-  /**
-   * Path settings.
-   */
-  mongodb: {
-    url: "mongodb://127.0.0.1:27017",
-    database: "sprynxDb",
-    options: {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+    // app environment
+    env: env.NODE_ENV,
+    server: {
+        domain: env.APP_DOMAIN,
+        port: env.APP_PORT,
+        use: {cors: true, bodyParser: true, ngrok: true, helmet: false},
     },
-  },
-  paths: {
     /**
-     * Base Folder
-     * Where this app is called from.
-     *
-     * Best value for this is: __dirname
      */
-    base: base,
-
-    /**
-     * Point routes file to routes.ts
-     */
-    routesFile: "backend://routes.ts",
-  },
-  bcrypt: {
-    salt: 10,
-  },
+    mongodb: {
+        url: env.DB_SERVER,
+        database: env.DB_NAME,
+        options: {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        },
+    },
+    paths: {
+        base: base,
+        routesFile: "backend://routes.ts",
+    },
+    bcrypt: {
+        salt: 10,
+    },
 };
